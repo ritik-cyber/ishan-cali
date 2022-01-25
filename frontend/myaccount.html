@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      type="text/css"
+      media="screen"
+      href="./assest/stylesheet/style.css"
+    />
+    <script src="main.js"></script>
+    <script
+      src="https://kit.fontawesome.com/2bef200a9d.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <header>
+      <div class="container flex justify-between">
+        <div class="flex-40">
+          <a href="index.html">
+            <h1>1Shaan Calisthenics</h1>
+          </a>
+        </div>
+        <div>
+          <label class="bars" for="toggle">
+            <i class="fas fa-bars"></i>
+          </label>
+          <input id="toggle" type="checkbox" />
+          <nav class="nav-bar">
+            <ul class="flex flex-col-responsive">
+              <li>
+                <a href="index.html">home </a>
+              </li>
+              <li>
+                <a href="about.html">about</a>
+              </li>
+              <li>
+                <a href="programs.html">programs</a>
+              </li>
+              <li>
+                <a href="myaccount.html">my account</a>
+              </li>
+              <li>
+                <a href="myaccount.html">signup</a>
+              </li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+    <main>
+      <section class="hero account-sec">
+        <figure>
+          <img
+            id="background-image"
+            class="width-full"
+            src="./assest/images/IMG_1475.JPG"
+          />
+        </figure>
+        <!-- sign-up form -->
+        <form action="" class="form">
+          <div class="sign-up-padding">
+            <h4 class="heading-form">sign-up form</h4>
+            <p class="para-form">
+              Please fill in this form to create an account.
+            </p>
+            <label for="name">Name</label>
+            <input
+              type="text"
+              id="name"
+              required
+              placeholder="Enter your name"
+            />
+            <label for="last-name">Last name</label>
+            <input
+              type="text"
+              id="last-name"
+              required
+              placeholder="Enter your last name"
+            />
+            <label for="number">Number</label>
+            <input type="number" placeholder="Enter your number" />
+
+            <label for="email">Email</label>
+            <input
+              type="email"
+              required
+              id="email"
+              placeholder="Enter your email"
+            />
+            <label for="pasw">Password</label>
+            <input
+              type="password"
+              required
+              name="pasw"
+              placeholder="Enter your password"
+            />
+            <label for="pasw"> Re password</label>
+            <input
+              type="password"
+              required
+              id="pasw"
+              placeholder="Enter your password"
+            />
+            <div class="flex btn-cancel-signup">
+              <button class="btn-cancel"><a href="#">cancel</a></button>
+              <button class="btn-sign-up"><a href="#">sign-up</a></button>
+            </div>
+          </div>
+        </form>
+
+        <!-- login form -->
+        <form action="" class="form">
+          <div class="login-padding">
+            <h4 class="heading-form">login form</h4>
+
+            <label for="email">Email</label>
+            <input
+              type="email"
+              required
+              id="email"
+              placeholder="Enter your email"
+            />
+            <label for="pasw">Password</label>
+            <input
+              type="password"
+              required
+              name="pasw"
+              placeholder="Enter your password"
+            />
+
+            <div class="flex btn-cancel-signup">
+              <button class="btn-login-up"><a href="#">login</a></button>
+            </div>
+          </div>
+          <div class="login-div">
+            <a href="#" class="forget-pas">Forget password?</a>
+          </div>
+        </form>
+      </section>
+    </main>
+    <footer class="footer flex-column center justify-between">
+      <nav class="flex">
+        <a href="#">
+          <i class="fab fa-facebook"></i>
+        </a>
+        <a href="#">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#">
+          <i class="far fa-envelope"></i>
+        </a>
+      </nav>
+      <p>@2022 all rights reserved</p>
+    </footer>
+  </body>
+</html>
