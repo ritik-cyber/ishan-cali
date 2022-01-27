@@ -21,7 +21,7 @@
     <header>
       <div class="container flex justify-between">
         <div class="flex-40">
-          <a href="home.html">
+          <a href="index.html">
             <h1>1Shaan Calisthenics</h1>
           </a>
         </div>
@@ -31,7 +31,7 @@
           </label>
           <input id="toggle" type="checkbox" />
           <nav class="nav-bar">
-            <ul class="flex flex-col-responsive">
+            <ul class="flex flex-col-responsive" id="main-navbar">
               <li>
                 <a href="index.html">home </a>
               </li>
@@ -55,14 +55,7 @@
     <main>
       <section class="hero">
         <div class="container">
-          <video
-            id="background-video"
-            autoplay
-            loop
-            poster
-            muted
-            type="video/mp4"
-          >
+          <video id="background-video" height="100vh" muted>
             <source
               src="./assest/videos/ÆSTRAL - i miss you.mp4"
               height="100vh"
@@ -78,7 +71,7 @@
           </div>
         </div>
       </section>
-      <section class="gallery">
+      <!-- <section class="gallery">
         <figure
           class="flex gallery-sub-container flex-100-responsive flex-wrap-responsive"
         >
@@ -191,7 +184,7 @@
             />
           </figure>
         </figure>
-      </section>
+      </section> -->
     </main>
     <footer
       class="footer footer-programs-sec flex-column center justify-between"
@@ -209,5 +202,13 @@
       </nav>
       <p>@2022 all rights reserved</p>
     </footer>
+    <script>
+      const vid = document.getElementById("background-video");
+      function loadVideo() {
+        vid.autoplay = true;
+        vid.load();
+      }
+      window.addEventListener("load", loadVideo());
+    </script>
   </body>
 </html>

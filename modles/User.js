@@ -8,9 +8,15 @@ const path = require("path");
 
 const UserSchema = new mongoose.Schema(
   {
-    name: {
+    firstName: {
       type: String,
-      required: [true, "Please provide your name"],
+      required: [true, "Please provide your first name"],
+      maxlength: [32, "Name is too long"],
+      minlength: [3, "Name is too short"],
+    },
+    lastName: {
+      type: String,
+      required: [true, "Please provide your last name"],
       maxlength: [32, "Name is too long"],
       minlength: [3, "Name is too short"],
     },

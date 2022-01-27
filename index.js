@@ -27,15 +27,21 @@ mongoose
   .catch(console.error);
 
 app.post("/register", async (req, res, next) => {
-  //   console.log(req.body);
-  const { name, email, password, number } = req.body;
-  if (!name || !email || !password || !number)
+  console.log(req.body);
+  const { firstName, lastName, email, password, number } = req.body;
+  if (!firstName || !lastName || !email || !password || !number)
     return next(new ErrorResponse("please provide email and name", 400));
   const exixt = await User.findOne({ email });
 
   if (exixt) return next(new ErrorResponse("user already exixt", 401));
   //  user create
-  const user = await User.create({ email, name, password, number });
+  const user = await User.create({
+    email,
+    firstName,
+    lastName,
+    password,
+    number,
+  });
   const verificationToken = user.getVerificationToken();
   await user.save();
 
@@ -64,7 +70,7 @@ app.post("/register", async (req, res, next) => {
   }
 });
 
-app.put("/verify/", async (req, res, next) => {
+app.put("/verify", async (req, res, next) => {
   // Hashing the token
   if (!req.body.verificationToken)
     return next(new ErrorResponse("please provide verify token", 400));
@@ -170,7 +176,7 @@ app.post("/forget-password", async (req, res, next) => {
     try {
       await sendEmail({
         to: user.email,
-        subject: "Petohub Password Reset Request",
+        subject: "Password Reset Request",
         text: message,
       });
       res.status(200).json({
@@ -191,7 +197,7 @@ app.post("/forget-password", async (req, res, next) => {
 
 // reset password
 
-app.put("./reset", async (req, res, next) => {
+app.put("/reset", async (req, res, next) => {
   // Hashing the token
   const resetPasswordToken = crypto
     .createHash("sha256")
