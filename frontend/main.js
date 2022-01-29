@@ -33,6 +33,7 @@ window.onload = function () {
       nav.appendChild(userLi);
 
       // signout
+
       const signoutA = document.createElement("a");
       signoutA.href = "#";
       signoutA.innerHTML = `Sign Out`;
