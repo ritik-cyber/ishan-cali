@@ -11,6 +11,8 @@ const ErrorResponse = require("./utils/errorResponse");
 const sendEmail = require("./utils/sendemail");
 
 const User = require("./modles/User");
+const Program = require("./modles/Program");
+const Inquiry = require("./modles/Inquiry");
 
 const app = express();
 
@@ -25,6 +27,90 @@ mongoose
     console.log("connect mongodb");
   })
   .catch(console.error);
+
+app.get("/program", async (req, res, next) => {
+  const programs = await Program.find();
+  return res.status(200).json({
+    success: true,
+    programs,
+  });
+});
+
+//admin route for all inquiries
+app.post("/inquiry", async (req, res, next) => {
+  const user = await User.findById(req.body.userId);
+  if (!user || user.role !== "Admin") {
+    return res.status(401).json({
+      success: false,
+      message: "forebidden ",
+    });
+  }
+  const inquiries = await Inquiry.find().populate("user program");
+  return res.status(200).json({
+    success: true,
+    inquiries,
+  });
+});
+// admin route
+app.put("/assign-program", async (req, res, next) => {
+  const user = await User.findById(req.body.userId);
+  if (!user || user.role !== "Admin") {
+    return res.status(401).json({
+      success: false,
+      message: "forebidden ",
+    });
+  }
+  const inquiry = await Inquiry.findById(req.body.inquiryId).populate(
+    "user program"
+  );
+  if (!inquiry)
+    return res.status(404).json({
+      success: false,
+      message: "inquiry not found",
+    });
+  inquiry.status = "ACCEPTED";
+  inquiry.user.programs.push(inquiry.program._id);
+  await inquiry.user.save();
+  await inquiry.save();
+  return res.status(201).json({
+    success: true,
+    inquiry,
+  });
+});
+
+// public route
+app.post("/inquiry-now", async (req, res, next) => {
+  const { userId, programId } = req.body;
+  // verify if user and program is legit
+  const user = await User.findById(userId);
+  if (!user)
+    return res.status(404).json({
+      success: false,
+      message: "user not found",
+    });
+  const program = await Program.findById(programId);
+  if (!program)
+    return res.status(404).json({
+      success: false,
+      message: "program not found",
+    });
+
+  // check if there is already an inquiry
+  if (await Inquiry.findOne({ program: programId, user: userId })) {
+    return res.status(401).json({
+      success: false,
+      message: "inquiry already exists",
+    });
+  }
+
+  // everything is fine
+  const inquiry = await Inquiry.create({ program: programId, user: userId });
+  // TODO: send an email to admin
+  return res.status(201).json({
+    success: true,
+    inquiry,
+  });
+});
 
 app.post("/register", async (req, res, next) => {
   console.log(req.body);
@@ -135,6 +221,18 @@ app.post("/login", async (req, res, next) => {
 
     // Success response
     const _user = await User.findById(user.id);
+    // give videoLink if user has bought the program
+    if (_user.programs?.length > 0) {
+      const programIds = _user.programs;
+      const programs = [];
+      for (const programId of programIds) {
+        const program = await Program.findById(programId).select(
+          "+videoLink +content"
+        );
+        programs.push(program);
+      }
+      _user.programs = programs;
+    }
     return res.status(200).json({
       success: true,
       token: user.getSignedToken(),

@@ -56,7 +56,15 @@ const UserSchema = new mongoose.Schema(
       default: "Customer",
       enum: ["Customer", "Admin"],
     },
-
+    programs: {
+      type: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Program",
+        },
+      ],
+      default: [],
+    },
     isVerified: {
       type: Boolean,
       default: false,
